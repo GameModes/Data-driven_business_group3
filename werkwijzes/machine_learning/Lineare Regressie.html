@@ -13076,7 +13076,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13099,7 +13099,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sap_storing_data_hu_project.csv&#39;</span><span class="p">,</span> <span class="n">low_memory</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>  
@@ -13119,7 +13119,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">])</span>
@@ -13143,7 +13143,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Nu-de-data-in-juiste-types-staat-en-gene-duplicates-in-zitten,-kunnen-we-verder-gaan-met-de-volgende-functies:">Nu de data in juiste types staat en gene duplicates in zitten, kunnen we verder gaan met de volgende functies:<a class="anchor-link" href="#Nu-de-data-in-juiste-types-staat-en-gene-duplicates-in-zitten,-kunnen-we-verder-gaan-met-de-volgende-functies:">&#182;</a></h4><ul>
+<h4 id="Nu-de-data-in-juiste-types-staat-en-geen-duplicates-in-zitten,-kunnen-we-verder-gaan-met-de-volgende-functies:">Nu de data in juiste types staat en geen duplicates in zitten, kunnen we verder gaan met de volgende functies:<a class="anchor-link" href="#Nu-de-data-in-juiste-types-staat-en-geen-duplicates-in-zitten,-kunnen-we-verder-gaan-met-de-volgende-functies:">&#182;</a></h4><ul>
 <li>prep_data, hierin cleanen we de data nog om de mean square error beter te maken</li>
 <li>split_data, om te model te gebruiken, worden er dummies en de data wordt splitst in train en test waardes</li>
 <li>lr_train_model, hier wordt linearRegression gebruikt om de waardes te voorspellen</li>
@@ -13154,20 +13154,20 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prep_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">nan_columns</span><span class="p">):</span>    
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">nan_columns</span><span class="p">)</span> <span class="c1">#[&#39;stm_hers_tijd&#39;, &#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">nan_columns</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
-    <span class="c1"># TODO: waarom zoveel weggegooid, explain</span>
+    <span class="c1"># Wegens overleg met de product owner, hebben we deze grenzen gesteld</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)]</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 
 <span class="k">def</span> <span class="nf">split_data</span> <span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dummies_columns</span><span class="p">):</span>
-    <span class="n">DummiesX</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">dummies_columns</span><span class="p">])</span> <span class="c1"># [&#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
+    <span class="n">DummiesX</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">dummies_columns</span><span class="p">])</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span>
     
     <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">DummiesX</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -13192,7 +13192,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_LR</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_groep&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">]]</span>
@@ -13205,7 +13205,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_LR</span> <span class="o">=</span> <span class="n">prep_data</span><span class="p">(</span><span class="n">df_LR</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span>
@@ -13232,45 +13232,6 @@ div#notebook {
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
 </div>
 </div>
 

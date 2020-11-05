@@ -13083,7 +13083,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13207,15 +13207,34 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">read_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;pro-rails_data.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">read_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sap_storing_data_hu_project.csv&#39;</span><span class="p">)</span>
 <span class="n">read_data</span> <span class="o">=</span> <span class="n">read_data</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">])</span>
 <span class="n">read_data</span> <span class="o">=</span> <span class="n">read_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Anaconda3\lib\site-packages\IPython\core\interactiveshell.py:3071: DtypeWarning: Columns (0,11,19,21,24,25,27,32,33,36,37,38,39,40,46,47,48,49,51,53,55,56,60,73,75,78,80,82,83,86,87,91,95,99,102,103,104,107,108,109,110,111,112,113,116,118,119,120,121,122,123,124,129) have mixed types.Specify dtype option on import or set low_memory=False.
+  has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13230,7 +13249,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">read_data</span> <span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">read_data</span> <span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">])</span>
@@ -13252,7 +13271,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">read_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -13273,7 +13292,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13606,7 +13625,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">oplostijd_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">])</span>
@@ -13623,7 +13642,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13708,7 +13727,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">gemiddelde_oplostijd</span> <span class="o">=</span> <span class="n">oplostijd_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -13739,7 +13758,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13836,7 +13855,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">r2_score</span><span class="p">(</span><span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;gemiddelde&#39;</span><span class="p">],</span> <span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">])</span>
@@ -13852,7 +13871,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[27]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13869,7 +13888,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;gemiddelde&#39;</span><span class="p">],</span> <span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">],</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -13885,7 +13904,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13924,7 +13943,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Drop alle duplicates mbv #stm_sap_meldnr</span>
@@ -13959,7 +13978,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_pog</span> <span class="o">=</span> <span class="n">df_pog</span><span class="p">[(</span><span class="n">df_pog</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_pog</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)]</span>
@@ -13978,7 +13997,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[55]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14311,7 +14330,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">oplostijd_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_pog</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">])</span>
@@ -14328,7 +14347,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[56]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14413,7 +14432,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">gemiddelde_oplostijd</span> <span class="o">=</span> <span class="n">oplostijd_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -14444,7 +14463,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[57]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14541,7 +14560,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">r2_score</span><span class="p">(</span><span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;gemiddelde&#39;</span><span class="p">],</span> <span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">])</span>
@@ -14557,7 +14576,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[58]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -14574,7 +14593,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;gemiddelde&#39;</span><span class="p">],</span> <span class="n">oplostijd_data</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">],</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -14590,7 +14609,7 @@ Toch zal dit op elke plaats en tijd anders zijn dan voorspelt. De plaats kan nam
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[59]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 

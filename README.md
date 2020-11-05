@@ -12,6 +12,3 @@ Onze verschillende werkwijze codes staan in het mapje. Werkwijzes, wat onderverd
     - Random Forest Regressor
 - Applicatie
     - beeld basics
-    - input
-    - functie gebruik
-    - output

@@ -13074,9 +13074,31 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Reparatietijd-berekener-door-Koen,-Guy-en-Ruben">Reparatietijd berekener door Koen, Guy en Ruben<a class="anchor-link" href="#Reparatietijd-berekener-door-Koen,-Guy-en-Ruben">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-Imports">Module Imports<a class="anchor-link" href="#Module-Imports">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>(Niet geïnstalleerd? Doe in command prompt: pip install <em>module_naam</em> (bijvoorbeeld pip install sklearn)</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13085,6 +13107,7 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 </pre></div>
 
     </div>
@@ -13092,62 +13115,19 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Voorbereiding">Data Voorbereiding<a class="anchor-link" href="#Data-Voorbereiding">&#182;</a></h2>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">Model_trainer_RandomForest</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dummies_columns</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">prep_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">nan_columns</span><span class="p">):</span>    
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">nan_columns</span><span class="p">)</span> <span class="c1">#[&#39;stm_hers_tijd&#39;, &#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)]</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
-    
-    <span class="k">def</span> <span class="nf">rfr_train_model</span> <span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dummies_columns</span><span class="p">):</span>
-        <span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">dummies_columns</span><span class="p">])</span> <span class="c1"># [&#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
-        <span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span>
-        <span class="n">regr</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span>
-    
-    <span class="n">df_RFR</span> <span class="o">=</span> <span class="n">prep_data</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_groep&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span>
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span> <span class="o">=</span> <span class="n">rfr_train_model</span> <span class="p">(</span><span class="n">df_RFR</span><span class="p">,</span> <span class="n">dummies_columns</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span>
-    
-<span class="k">def</span> <span class="nf">RandomForestTester</span> <span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">geschatte_tijd</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">dataframe_creator</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">geschatte_tijd</span><span class="p">):</span>
-        <span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">oorzaakcode</span><span class="p">],</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">prioriteit</span><span class="p">]})</span>
-        <span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">geschatte_tijd</span><span class="p">]})</span>
-        <span class="k">return</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span>
-    
-    <span class="k">def</span> <span class="nf">predictor</span><span class="p">(</span><span class="n">regr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-        <span class="n">meansquare</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">geschatte_tijd</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;Bij oorzaakcode </span><span class="si">{}</span><span class="s2">, prioriteit </span><span class="si">{}</span><span class="s2"> met werkelijke tijd </span><span class="si">{}</span><span class="s2"> gokt het: </span><span class="si">{}</span><span class="s2">, dus Hij zit er </span><span class="si">{}</span><span class="s2"> naast&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">geschatte_tijd</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">round</span><span class="p">(</span><span class="n">meansquare</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;Bij oorzaakcode </span><span class="si">{}</span><span class="s2">, prioriteit </span><span class="si">{}</span><span class="s2"> met onbekende werkelijke tijd gokt het: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="n">output</span>
-    <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">dataframe_creator</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">geschatte_tijd</span><span class="p">)</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">predictor</span><span class="p">(</span><span class="n">regr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
-
-<span class="k">def</span> <span class="nf">onetimerun</span><span class="p">():</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">data_reading</span><span class="p">():</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sap_storing_data_hu_project.csv&#39;</span><span class="p">,</span> <span class="n">low_memory</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">])</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -13161,6 +13141,104 @@ div#notebook {
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">])</span> 
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
+
+<span class="k">def</span> <span class="nf">prep_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">nan_columns</span><span class="p">):</span>    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">nan_columns</span><span class="p">)</span> <span class="c1">#[&#39;stm_hers_tijd&#39;, &#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Model-Gebruik">Model Gebruik<a class="anchor-link" href="#Model-Gebruik">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dtr_train_model</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dummies_columns</span><span class="p">):</span>
+    <span class="n">DummiesX</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">dummies_columns</span><span class="p">])</span> <span class="c1"># [&#39;stm_oorz_code&#39;, &#39;stm_prioriteit&#39;]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">DummiesX</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">DTR</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">DTR</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">DTR</span>
+
+<span class="k">def</span> <span class="nf">total_data_observation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">DTR</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">DTR</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">DTR</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="c1"># probability begin</span>
+    <span class="n">nodes_y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;node_id&#39;</span><span class="p">:</span> <span class="n">DTR</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">})</span>
+    <span class="n">nodes_std</span> <span class="o">=</span> <span class="n">nodes_y_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;node_id&#39;</span><span class="p">)[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;std&#39;</span><span class="p">])</span>
+    <span class="n">y_proba</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;node_id&#39;</span><span class="p">:</span> <span class="n">DTR</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="s1">&#39;node_rmse&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_proba</span><span class="p">)):</span>
+        <span class="n">y_proba</span><span class="p">[</span><span class="s1">&#39;node_rmse&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nodes_std</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">y_proba</span><span class="p">[</span><span class="s1">&#39;node_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">gevonden RMSE Waardes: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;betrouwbaarheden per Node ID in RSME waardes:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_proba</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;node_rmse&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">))</span>
+    <span class="c1"># probility einde</span>
+    <span class="n">RMSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">))</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r2</span><span class="p">,</span> <span class="n">RMSE</span>
+
+<span class="k">def</span> <span class="nf">one_input_tester</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dataframe_creator</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">):</span>
+        <span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">oorzaakcode</span><span class="p">],</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">prioriteit</span><span class="p">]})</span>
+        <span class="k">return</span> <span class="n">X_test</span>
+    
+    <span class="k">def</span> <span class="nf">predictor</span><span class="p">(</span><span class="n">regr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+<span class="c1">#         #probability begin:</span>
+        <span class="n">nodes_y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;node_id&#39;</span><span class="p">:</span> <span class="n">regr</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">})</span>
+        <span class="n">nodes_std</span> <span class="o">=</span> <span class="n">nodes_y_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;node_id&#39;</span><span class="p">)[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;std&#39;</span><span class="p">])</span>
+        <span class="n">y_proba</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;node_id&#39;</span><span class="p">:</span> <span class="n">regr</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="s1">&#39;node_rmse&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_proba</span><span class="p">)):</span>
+            <span class="n">y_proba</span><span class="p">[</span><span class="s1">&#39;node_rmse&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nodes_std</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">y_proba</span><span class="p">[</span><span class="s1">&#39;node_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        
+        <span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="n">y_proba</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;node_rmse&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">betrouwbaarheid</span><span class="p">)[</span><span class="mi">35</span><span class="p">:</span><span class="o">-</span><span class="mi">5</span><span class="p">])</span>
+<span class="c1"># #         #probability einde                       </span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">betrouwbaarheid</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">dataframe_creator</span><span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">,</span> <span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="n">predictor</span><span class="p">(</span><span class="n">regr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">betrouwbaarheid</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Voer de volgende code 1x uit:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data_reading</span><span class="p">()</span>
+<span class="n">df_RFR</span> <span class="o">=</span> <span class="n">prep_data</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_groep&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13170,69 +13248,169 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">DTR</span> <span class="o">=</span> <span class="n">dtr_train_model</span> <span class="p">(</span><span class="n">df_RFR</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span>
+<span class="n">df_RFR</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>#stm_sap_meldnr</th>
+      <th>stm_hers_tijd</th>
+      <th>stm_oorz_groep</th>
+      <th>stm_prioriteit</th>
+      <th>stm_oorz_code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>50053257</td>
+      <td>62.0</td>
+      <td>ONR-DERD</td>
+      <td>9.0</td>
+      <td>142.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>50053290</td>
+      <td>40.0</td>
+      <td>ONR-DERD</td>
+      <td>9.0</td>
+      <td>142.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>50053292</td>
+      <td>214.0</td>
+      <td>ONR-DERD</td>
+      <td>9.0</td>
+      <td>145.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>50053317</td>
+      <td>425.0</td>
+      <td>WEER</td>
+      <td>9.0</td>
+      <td>189.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50053337</td>
+      <td>405.0</td>
+      <td>ONR-DERD</td>
+      <td>9.0</td>
+      <td>142.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>344474</th>
+      <td>99003502</td>
+      <td>89.0</td>
+      <td>TECHONV</td>
+      <td>4.0</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>344475</th>
+      <td>99003503</td>
+      <td>179.0</td>
+      <td>TECHONV</td>
+      <td>4.0</td>
+      <td>221.0</td>
+    </tr>
+    <tr>
+      <th>344476</th>
+      <td>99003505</td>
+      <td>24.0</td>
+      <td>TECHONV</td>
+      <td>5.0</td>
+      <td>215.0</td>
+    </tr>
+    <tr>
+      <th>344477</th>
+      <td>99003506</td>
+      <td>36.0</td>
+      <td>TECHONV</td>
+      <td>2.0</td>
+      <td>218.0</td>
+    </tr>
+    <tr>
+      <th>344478</th>
+      <td>99999999</td>
+      <td>29.0</td>
+      <td>ONR-RIB</td>
+      <td>2.0</td>
+      <td>135.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>344479 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Voer de volgende code om achter de R2 score en Root Mean Square Error te weten van de hele model:</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#only 1 time run</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">onetimerun</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#only 1 time run</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span> <span class="o">=</span> <span class="n">Model_trainer_RandomForest</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">oorzaakcode</span> <span class="o">=</span> <span class="mi">218</span>
-<span class="n">prioriteit</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">geschatte_tijd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">RandomForestTester</span> <span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">geschatte_tijd</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span><span class="p">))</span>
-<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">RandomForestTester</span> <span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">regr</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">r2</span><span class="p">,</span> <span class="n">RMSE</span> <span class="o">=</span> <span class="n">total_data_observation</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">R2 score geeft: </span><span class="si">{}</span><span class="s2"> &amp; Totale Root Mean Square Error waarde geeft: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">RMSE</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13249,7 +13427,67 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Bij oorzaakcode 218, prioriteit 2 met onbekende werkelijke tijd gokt het: 48
+<pre>
+gevonden RMSE Waardes: 0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>d:\users\ruben\appdata\local\programs\python\python37\lib\site-packages\pandas\core\indexing.py:670: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  iloc._setitem_with_indexer(indexer, value)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+gevonden RMSE Waardes: 10000
+
+gevonden RMSE Waardes: 20000
+
+gevonden RMSE Waardes: 30000
+
+gevonden RMSE Waardes: 40000
+
+gevonden RMSE Waardes: 50000
+
+gevonden RMSE Waardes: 60000
+
+gevonden RMSE Waardes: 70000
+
+gevonden RMSE Waardes: 80000
+betrouwbaarheden per Node ID in RSME waardes:
+
+       node_id   node_rmse
+83455       71    7.595817
+82948       71    7.595817
+64678      154    8.292722
+65651      154    8.292722
+77963      154    8.292722
+...        ...         ...
+12634      532  226.718621
+14443      532  226.718621
+48470      532  226.718621
+58044      180  238.979288
+69258      180  238.979288
+
+[86120 rows x 2 columns]
+
+R2 score geeft: 0.07205396663970509 &amp; Totale Root Mean Square Error waarde geeft: 74.75114908557924
 </pre>
 </div>
 </div>
@@ -13258,12 +13496,242 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Voer de volgende code om de model te testen met maar 2 inputs waardes:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">oorzaakcode</span> <span class="o">=</span> <span class="mi">66</span>
+<span class="n">prioriteit</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">reparatietijd</span><span class="p">,</span> <span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="n">one_input_tester</span> <span class="p">(</span><span class="n">oorzaakcode</span><span class="p">,</span> <span class="n">prioriteit</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">DTR</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Geschatte reparatietijd geeft: </span><span class="si">{}</span><span class="s2"> &amp; Betrouwbaarheid waarde geeft: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reparatietijd</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">betrouwbaarheid</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Geschatte reparatietijd geeft: 100 &amp; Betrouwbaarheid waarde geeft: 7
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Applicatie-(check-onderaan-om-alles-te-runnen)">Applicatie (check onderaan om alles te runnen)<a class="anchor-link" href="#Applicatie-(check-onderaan-om-alles-te-runnen)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">():</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+    <span class="sd">&quot;&quot;&quot;Paar basiswaarden instellen, root aanmaken en achtergrond instellen.&quot;&quot;&quot;</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ProRail applicatie HBO-AI 2020 groep 3&quot;</span><span class="p">)</span>
+    <span class="n">proRailLogoColour</span> <span class="o">=</span> <span class="s1">&#39;#CD1E44&#39;</span>
+    <span class="n">backgroundColour</span> <span class="o">=</span> <span class="s1">&#39;#FFFFFF&#39;</span>
+
+    <span class="n">root</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">background</span><span class="o">=</span><span class="n">backgroundColour</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;Functies maken voor de 3 knoppen, activateSendButton checkt of oorzaakcode en prio ingevuld zijn zodat de send-knop werkt.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">activateSendButton</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">oorzaakCode2</span>
+        <span class="k">global</span> <span class="n">prioriteit2</span>
+        <span class="n">sendButton</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Bereken Hersteltijd voor </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">,</span> <span class="n">prioriteit2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prioriteit2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sendButton</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">NORMAL</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">oorzOnClick</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">oorzaakCode2</span>
+        <span class="n">oorzaakCode2</span> <span class="o">=</span> <span class="n">oorzEntry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">oorzLabel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Oorzaakcode: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">))</span>
+        <span class="n">activateSendButton</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">prioOnClick</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">prioriteit2</span>
+        <span class="n">prioriteit2</span> <span class="o">=</span> <span class="n">prioEntry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">prioLabel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Prioriteit: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prioriteit2</span><span class="p">))</span>
+        <span class="n">activateSendButton</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">sendInfo</span><span class="p">():</span>
+        <span class="n">sendButton</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">DISABLED</span><span class="p">)</span>
+        <span class="c1"># Hier output aftappen !!!</span>
+        <span class="k">global</span> <span class="n">oorzaakCode2</span>
+        <span class="k">global</span> <span class="n">prioriteit2</span>
+        <span class="n">calculatedTime</span><span class="p">,</span> <span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="n">one_input_tester</span> <span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">,</span> <span class="n">prioriteit2</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">DTR</span><span class="p">)</span>    
+        <span class="n">herstel2Label</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> minuten&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calculatedTime</span><span class="p">))</span>
+        <span class="n">betr2Label</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">betrouwbaarheid</span><span class="p">))</span>
+        
+        <span class="n">oorzaakCode2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">prioriteit2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">oorzLabel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Oorzaakcode: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">))</span>
+        <span class="n">prioLabel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Prioriteit: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prioriteit2</span><span class="p">))</span>
+        <span class="n">sendButton</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Bereken Hersteltijd&quot;</span><span class="p">)</span>
+
+        
+    <span class="sd">&quot;&quot;&quot;Meldingnummer frame aanmaken en vullen met entry en label&quot;&quot;&quot;</span>
+    <span class="n">BlankFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">BlankFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="n">bgList</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">backgroundColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+    <span class="n">bgList</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">)</span>
+
+    <span class="n">meldnrFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">bgList</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">meldnrFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">meldnrLabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">meldnrFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Meldingnummer:&quot;</span><span class="p">,</span> 
+                        <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 20&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">meldnrLabel</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+    <span class="n">meldnrEntry</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">meldnrFrame</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="n">RAISED</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 16&#39;</span><span class="p">)</span>
+    <span class="n">meldnrEntry</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+    
+    <span class="sd">&quot;&quot;&quot;OorzaakCode frame aanmaken, label/entry/button toevoegen&quot;&quot;&quot;</span>
+    <span class="n">oorzFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">bgList</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">oorzFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">oorzLabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">oorzFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Oorzaakcode: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oorzaakCode2</span><span class="p">),</span> 
+                        <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 18&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">oorzLabel</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">NW</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">invoerFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">oorzFrame</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">invoerFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">oorzEntry</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">invoerFrame</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="n">RAISED</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 16&#39;</span><span class="p">)</span>
+    <span class="n">oorzEntry</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+    <span class="n">oorzButton</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">invoerFrame</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">oorzOnClick</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Accepteer&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">oorzButton</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+    <span class="sd">&quot;&quot;&quot;Prioriteit frame aanmaken, label/entry/button toevoegen&quot;&quot;&quot;</span>
+    <span class="n">prioFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">bgList</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">prioFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">prioLabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">prioFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Prioriteit: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prioriteit2</span><span class="p">),</span>
+                        <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 18&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">prioLabel</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">NW</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">invoerFrame2</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">prioFrame</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">invoerFrame2</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">prioEntry</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">invoerFrame2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="n">RAISED</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 16&#39;</span><span class="p">)</span>
+    <span class="n">prioEntry</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+    <span class="n">prioButton</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">invoerFrame2</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">prioOnClick</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Accepteer&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">prioButton</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+    <span class="sd">&quot;&quot;&quot;Frame aanmaken met button voor het verwerken van de gegevens&quot;&quot;&quot;</span>
+    <span class="n">sendFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">bgList</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">backgroundColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">sendFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">sendButton</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">sendFrame</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">sendInfo</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Bereken Hersteltijd&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">DISABLED</span><span class="p">)</span>
+    <span class="n">sendButton</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    
+    <span class="sd">&quot;&quot;&quot;Resultaten weergeven in de frame, waarbij labels geupdate worden met de resultaten&quot;&quot;&quot;</span>
+    <span class="n">herstelFrame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">bgList</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">herstelFrame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">herstelLabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">herstelFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Berekende hersteltijd:&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 16&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">)</span>
+    <span class="n">herstelLabel</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">herstel2Label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">herstelFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calculatedTime</span><span class="p">),</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 26&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">herstel2Label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">betrLabel</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">herstelFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Betrouwbaarheid:&#39;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 16&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">proRailLogoColour</span><span class="p">)</span>
+    <span class="n">betrLabel</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+    <span class="n">betr2Label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">herstelFrame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">betrouwbaarheid</span><span class="p">),</span> <span class="n">font</span><span class="o">=</span><span class="s1">&#39;Bold, 26&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">betr2Label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+
+
+
+    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Run-beide-2-cellen-om-te-runnen">Run beide 2 cellen om te runnen<a class="anchor-link" href="#Run-beide-2-cellen-om-te-runnen">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Globals waarmee applicatie communiceert met ons model&quot;&quot;&quot;</span>
+<span class="n">oorzaakCode2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">prioriteit2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">calculatedTime</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">betrouwbaarheid</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">application</span><span class="p">()</span>
 </pre></div>
 
     </div>

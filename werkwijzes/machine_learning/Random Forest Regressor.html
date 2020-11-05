@@ -13076,7 +13076,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13099,7 +13099,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sap_storing_data_hu_project.csv&#39;</span><span class="p">,</span> <span class="n">low_memory</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>  
@@ -13119,7 +13119,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">])</span>
@@ -13128,10 +13128,9 @@ div#notebook {
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">])</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_fh_ddt&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_fh_ddt&#39;</span><span class="p">])</span>
 
-<span class="c1"># Calculate the true reparation time</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_fh_ddt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_fh_ddt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_aanntpl_tijd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span> <span class="p">])</span> 
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span> <span class="p">])</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
@@ -13155,13 +13154,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prep_data</span> <span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">])</span>
     <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df_Kpog</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df_Kpog</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">])</span> <span class="c1"># , &#39;stm_oorz_groep&#39;</span>
+
     <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df_Kpog</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df_Kpog</span><span class="p">[(</span><span class="n">df_Kpog</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_Kpog</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)]</span>
     <span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df_Kpog</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -13169,28 +13168,24 @@ div#notebook {
 
 <span class="k">def</span> <span class="nf">prep_rfr_model</span> <span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="n">DummiesX</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">]])</span> <span class="c1">#, &#39;stm_oorz_groep&#39;]])</span>
-<span class="c1">#     DummiesX = pd.concat([DummiesX,df[&#39;stm_prioriteit&#39;]], axis = 1)</span>
-    <span class="n">DummiesX</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-    <span class="c1"># DummiesX = df_Kpog[[&#39;stm_prioriteit&#39;]]</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">]</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">DummiesX</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span>
     
-<span class="k">def</span> <span class="nf">rfr_model</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
-    <span class="n">regr</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">rfr_model</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">MaxDepth</span><span class="p">):</span>
+    <span class="n">regr</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">MaxDepth</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
     <span class="n">meansquare</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">))</span>
     <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">r2</span><span class="p">,</span> <span class="n">meansquare</span>
 
-<span class="k">def</span> <span class="nf">rfc_model</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
-    <span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">rfc_model</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">MaxDepth</span><span class="p">):</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">MaxDepth</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
     <span class="n">meansquare</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">))</span>
     <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="c1">#     print(clf.predict_proba(DummiesX[:5]))</span>
     <span class="k">return</span> <span class="n">r2</span><span class="p">,</span> <span class="n">meansquare</span>
 </pre></div>
 
@@ -13201,7 +13196,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;#stm_sap_meldnr&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_hers_tijd&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_groep&#39;</span><span class="p">,</span><span class="s1">&#39;stm_prioriteit&#39;</span><span class="p">,</span> <span class="s1">&#39;stm_oorz_code&#39;</span><span class="p">]]</span>
@@ -13214,13 +13209,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_Kpog</span> <span class="o">=</span> <span class="n">prep_data</span> <span class="p">(</span><span class="n">df_Kpog</span><span class="p">)</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">prep_rfr_model</span> <span class="p">(</span><span class="n">df_Kpog</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Classifier: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rfc_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Regressor: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rfr_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Classifier: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rfc_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Regressor: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rfr_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -13249,13 +13244,56 @@ Random Forest Regressor: (0.07181898604536596, 74.76061297516087)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># calculate what max_depth is the best</span>
+<span class="n">depthlist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">depth_r2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">depth</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">):</span>
+    <span class="n">regr</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">depthlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_pred</span><span class="p">)))</span>
+    <span class="n">depth_r2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">depthlist</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">depth_r2</span><span class="p">))</span>
+
+<span class="n">depthlist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">depthlist</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span>
+<span class="c1">#best max_depth is plus 1</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>74.75191760286457 0.0720348860973693
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>12</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
